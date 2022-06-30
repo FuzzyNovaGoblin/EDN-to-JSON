@@ -19,7 +19,7 @@
   (def input-files (remove nil? (map create-files-from-args args)))
 
   ;; defire regex keys
-  (def key-pattern (re-pattern "(:[^\\/]*)\\/([^\\s]*)"))
+  (def key-pattern (re-pattern "(:[^\\/]*)\\/([^\\/][^\\s]*)"))
   (def edn-pattern (re-pattern ".edn$"))
 
   (doseq
@@ -40,4 +40,5 @@
        (clojure.string/replace (.getName input-file) edn-pattern ".json"))]
 
       ;; send data to output file
-      (spit out-file  (json/write-str  edn-data)))))
+      (spit out-file  (json/write-str  edn-data))
+      (println (.toString out-file)))))
